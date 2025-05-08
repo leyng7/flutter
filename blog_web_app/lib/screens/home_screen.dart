@@ -16,13 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     webViewController = WebViewController()
       ..loadRequest(Uri.parse('https://blog.codefactory.ai'))
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setNavigationDelegate(NavigationDelegate(
-        onPageFinished: (String url) {
-          print(url)
-        }
-      ))
-    ;
+      ..setJavaScriptMode(JavaScriptMode.unrestricted);
   }
 
   @override
@@ -32,13 +26,18 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.orange,
         title: const Text('Code Factory'),
         centerTitle: true,
+        leading: IconButton(
+            onPressed: () {
+              webViewController.goBack();
+            },
+            icon: Icon(Icons.arrow_back)),
         actions: [
           IconButton(
               onPressed: () {
-                webViewController.loadRequest(Uri.parse('https://blog.codefactory.ai'));
+                webViewController
+                    .loadRequest(Uri.parse('https://blog.codefactory.ai'));
               },
-              icon: Icon(Icons.home)
-          ),
+              icon: Icon(Icons.home)),
         ],
       ),
       body: WebViewWidget(controller: webViewController),
